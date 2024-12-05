@@ -21,10 +21,11 @@ export default class MainMenuScene extends Phaser.Scene {
 
 
     create() {
+
         const BASE_WIDTH = 800;
         const BASE_HEIGHT = 600;
-        const scaleRatioX = this.scale.width / BASE_WIDTH
-        const scaleRatioY = this.scale.height / BASE_HEIGHT
+        this.scaleRatioX = this.scale.width / BASE_WIDTH
+        this.scaleRatioY = this.scale.height / BASE_HEIGHT
 
         this.cameras.main.fadeIn(1000, 0, 0, 0);
         
@@ -33,7 +34,7 @@ export default class MainMenuScene extends Phaser.Scene {
 
         this.setupBackground('sky', 'clouds', 'foreground', 'distantLand');
         this.setupButton();
-        const title = this.add.image(this.scale.width/2, this.scale.height/2.75, 'IconMoodeng').setScale(0.25*scaleRatioX, 0.25*scaleRatioY);
+        const title = this.add.image(this.scale.width/2, this.scale.height/2.75, 'IconMoodeng').setScale(0.25*this.scaleRatioX, 0.25*this.scaleRatioY);
         
         if (!this.sound.get('backgroundMusic')) {
             this.backgroundMusic = this.sound.add('backgroundMusic', { volume: 0.5, loop: true });
@@ -82,17 +83,10 @@ export default class MainMenuScene extends Phaser.Scene {
     }
 
     scaleBackgrounds() {
-        const BASE_WIDTH = 800;
-        const BASE_HEIGHT = 600;
-        const scaleRatioX = this.scale.width / BASE_WIDTH
-        const scaleRatioY = this.scale.height / BASE_HEIGHT
-
-        //const hratio = 4*this.scale.height/1296;
-
-        this.sky.setScale(1.85*scaleRatioX, 1.85*scaleRatioY);
-        this.clouds.setScale(1.85*scaleRatioX, 1.85*scaleRatioY);
-        this.foreground.setScale(1.85*scaleRatioX, 1.85*scaleRatioY);
-        this.distantLand.setScale(1.85*scaleRatioX, 1.85*scaleRatioY);
+        this.sky.setScale(1.85*this.scaleRatioX, 1.85*this.scaleRatioY);
+        this.clouds.setScale(1.85*this.scaleRatioX, 1.85*this.scaleRatioY);
+        this.foreground.setScale(1.85*this.scaleRatioX, 1.85*this.scaleRatioY);
+        this.distantLand.setScale(1.85*this.scaleRatioX, 1.85*this.scaleRatioY);
         
     }
     
@@ -113,16 +107,10 @@ export default class MainMenuScene extends Phaser.Scene {
     }
 
     setupButton() {
-
-        const BASE_WIDTH = 800;
-        const BASE_HEIGHT = 600;
-        const scaleRatioX = this.scale.width / BASE_WIDTH;
-        const scaleRatioY = this.scale.height / BASE_HEIGHT;
-
         // Add the start button as an image and make it interactive
-        this.startButton = this.add.image(this.scale.width / 2, this.scale.height - 150*scaleRatioY, 'startButton')
+        this.startButton = this.add.image(this.scale.width / 2, this.scale.height - 150*this.scaleRatioY, 'startButton')
             .setInteractive()
-            .setScale(0.25*scaleRatioX, 0.25*scaleRatioY); // Adjust scale as needed
+            .setScale(0.25*this.scaleRatioX, 0.25*this.scaleRatioY); // Adjust scale as needed
 
         // Add click event to start the game
         this.startButton.on('pointerdown', () => {
@@ -133,10 +121,10 @@ export default class MainMenuScene extends Phaser.Scene {
 
         // Optional: Add hover effect
         this.startButton.on('pointerover', () => {
-            this.startButton.setScale(0.30*scaleRatioX, 0.30*scaleRatioY); // Scale up slightly on hover
+            this.startButton.setScale(0.30*this.scaleRatioX, 0.30*this.scaleRatioY); // Scale up slightly on hover
         });
         this.startButton.on('pointerout', () => {
-            this.startButton.setScale(0.25*scaleRatioX, 0.25*scaleRatioY); // Scale back down on hover out
+            this.startButton.setScale(0.25*this.scaleRatioX, 0.25*this.scaleRatioY); // Scale back down on hover out
         });
 
 

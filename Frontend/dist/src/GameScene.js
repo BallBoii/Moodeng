@@ -10,9 +10,8 @@ export default class GameScene extends Phaser.Scene {
         this.loadImage();
         this.loadFruits();
         this.loadMonsters();
-        this.load.image('hoppybara', 'assets/Moodeng.png');
+        this.load.image('Moodeng', 'assets/Moodeng.png');
         this.load.image('obstacle_jump', 'assets/obtra.png');
-        this.load.image('ground', 'assets/ground.png');
         this.load.image('restartIcon', 'assets/Icon/Icon_Return.png');
         this.load.image('backButton', 'assets/Icon/Icon_Home.png');
         this.load.image('heart', 'assets/Icon/Icon_Heart.png');
@@ -21,11 +20,12 @@ export default class GameScene extends Phaser.Scene {
     }
 
     create() {
+
         const BASE_WIDTH = 800;
         const BASE_HEIGHT = 600;
-        const scaleRatioX = this.scale.width / BASE_WIDTH
-        const scaleRatioY = this.scale.height / BASE_HEIGHT
-
+        this.scaleRatioX = this.scale.width / BASE_WIDTH
+        this.scaleRatioY = this.scale.height / BASE_HEIGHT
+        
         this.levelUpThresholds = [0,50,150,300,500,750,1000,1500];
         this.currentLevelIndex = 0;
         this.levelUpSound = this.sound.add('levelUp', { volume: 0.5 });
@@ -66,10 +66,10 @@ export default class GameScene extends Phaser.Scene {
         this.setupPlatforms();
 
         // Player (Capybara character)
-        this.player = this.physics.add.sprite(100, 500, 'hoppybara').setFlipX(true);
+        this.player = this.physics.add.sprite(100, 500, 'Moodeng').setFlipX(true);
         this.player.setCollideWorldBounds(true);
         this.player.setBounce(0);
-        this.player.setScale(0.2*scaleRatioX, 0.25*scaleRatioY);
+        this.player.setScale(0.2*this.scaleRatioX, 0.25*this.scaleRatioY);
         this.player.setDrag(100, 0);
         this.player.body.gravity.y = 1000;
 
@@ -357,11 +357,6 @@ export default class GameScene extends Phaser.Scene {
 
     spawnFatbird() {
         if (!this.gameActive) return;
-        const BASE_WIDTH = 800;
-        const BASE_HEIGHT = 600;
-        const scaleRatioX = this.scale.width / BASE_WIDTH
-        const scaleRatioY = this.scale.height / BASE_HEIGHT
-    
         const fatbird = this.monsters.create(
             this.scale.width,
             Phaser.Math.Between(50, 300), // Random Y position
@@ -379,7 +374,7 @@ export default class GameScene extends Phaser.Scene {
         );
     
         // Optional: Scale the Fatbird sprite if needed
-        fatbird.setScale(1.75*scaleRatioX, 1.75*scaleRatioY); // Adjust size to match the design
+        fatbird.setScale(1.75*this.scaleRatioX, 1.75*this.scaleRatioY); // Adjust size to match the design
         
     
         // Add collision with other game elements
@@ -392,14 +387,9 @@ export default class GameScene extends Phaser.Scene {
 
     spawnChicken() {
         if (!this.gameActive) return;
-        const BASE_WIDTH = 800;
-        const BASE_HEIGHT = 600;
-        const scaleRatioX = this.scale.width / BASE_WIDTH
-        const scaleRatioY = this.scale.height / BASE_HEIGHT
-
         const chicken = this.monsters.create(this.scale.width, 0.75*this.scale.height, 'Chicken'); // Spawn at the right edge
         chicken.hp = this.getScaledHP(4);
-        chicken.setScale(2*scaleRatioX, 2*scaleRatioY); // Adjust size
+        chicken.setScale(2*this.scaleRatioX, 2*this.scaleRatioY); // Adjust size
         chicken.setBounce(1); // Make it bounce on collision with the ground
         chicken.setCollideWorldBounds(true); // Prevent it from falling out of the world
         chicken.setVelocityX(-100); // Make it run to the left
@@ -431,13 +421,7 @@ export default class GameScene extends Phaser.Scene {
 
     spawnOwlet() {
         if (!this.gameActive) return;
-        
-        const BASE_WIDTH = 800;
-        const BASE_HEIGHT = 600;
-        const scaleRatioX = this.scale.width / BASE_WIDTH
-        const scaleRatioY = this.scale.height / BASE_HEIGHT
-
-        const owlet = this.monsters.create(this.scale.width, 0.72*this.scale.height, 'Owlet').setScale(3*scaleRatioX, 3*scaleRatioY).setVelocityX(-100).play('runLeft').setFlipX(true);
+        const owlet = this.monsters.create(this.scale.width, 0.72*this.scale.height, 'Owlet').setScale(3*this.scaleRatioX, 3*this.scaleRatioY).setVelocityX(-100).play('runLeft').setFlipX(true);
         owlet.hp = this.getScaledHP(5);
         owlet.body.setOffset(owlet.width * 0.1, owlet.height * 0.1);
     
@@ -468,18 +452,13 @@ export default class GameScene extends Phaser.Scene {
 
     spawnHeart(x, y) {
         if (!this.gameActive) return;
-
-        const BASE_WIDTH = 800;
-        const BASE_HEIGHT = 600;
-        const scaleRatioX = this.scale.width / BASE_WIDTH
-        const scaleRatioY = this.scale.height / BASE_HEIGHT
         const xPosition = x;
         const yPosition = y; 
 
         const heart = this.fallingHearts.create(xPosition, yPosition, 'heart');
 
         heart.setBounce(0.6);
-        heart.setScale(0.15*scaleRatioX, 0.15*scaleRatioY);
+        heart.setScale(0.15*this.scaleRatioX, 0.15*this.scaleRatioY);
         heart.setVelocityY(200);
         heart.setVelocityX(-200);
     }
@@ -488,14 +467,8 @@ export default class GameScene extends Phaser.Scene {
 
     spawnGhost() {
         if (!this.gameActive) return;
-
-        const BASE_WIDTH = 800;
-        const BASE_HEIGHT = 600;
-        const scaleRatioX = this.scale.width / BASE_WIDTH
-        const scaleRatioY = this.scale.height / BASE_HEIGHT
-
         const ghost = this.monsters.create(this.scale.width, 0.75*this.scale.height, 'ghost');
-        ghost.setScale(0.25*scaleRatioX, 0.25*scaleRatioY);
+        ghost.setScale(0.25*this.scaleRatioX, 0.25*this.scaleRatioY);
         ghost.setVelocityX(-150);
         ghost.body.allowGravity = false;
         ghost.hp = this.getScaledHP(2);
@@ -513,14 +486,9 @@ export default class GameScene extends Phaser.Scene {
 
     spawnRino() {
         if (!this.gameActive) return;
-
-        const BASE_WIDTH = 800;
-        const BASE_HEIGHT = 600;
-        const scaleRatioX = this.scale.width / BASE_WIDTH
-        const scaleRatioY = this.scale.height / BASE_HEIGHT
         // Create the Rino sprite
         const rino = this.monsters.create(this.scale.width, 0.75*this.scale.height, 'Rino');
-        rino.setScale(3*scaleRatioX, 3*scaleRatioY); // Adjust the scale as needed
+        rino.setScale(3*this.scaleRatioX, 3*this.scaleRatioY); // Adjust the scale as needed
         rino.setVelocityX(-400); // Set a high speed for the Rino
         rino.body.allowGravity = true; // Prevent gravity effect (optional)
         rino.hp = this.getScaledHP(4); // Set high HP for Rino (can be adjusted)
@@ -552,15 +520,11 @@ export default class GameScene extends Phaser.Scene {
 
     spawnBlueBird() {
         if (!this.gameActive) return;
-        const BASE_WIDTH = 800;
-        const BASE_HEIGHT = 600;
-        const scaleRatioX = this.scale.width / BASE_WIDTH
-        const scaleRatioY = this.scale.height / BASE_HEIGHT
         // Create the bluebird at the right side of the screen, with a random vertical position
         const bluebird = this.monsters.create(this.scale.width, Phaser.Math.Between(0.2*this.scale.height, 0.3*this.scale.height), 'BlueBird');
         this.throwRock(bluebird, 250, 0);
     
-        bluebird.setScale(1.8*scaleRatioX, 1.8*scaleRatioY); // Adjust scale if needed
+        bluebird.setScale(1.8*this.scaleRatioX, 1.8*this.scaleRatioY); // Adjust scale if needed
         bluebird.hp = this.getScaledHP(3); // Set HP for the bluebird
         bluebird.setVelocityX(-100); // Move bluebird to the left
         bluebird.play('BlueBirdFlying'); // Play flying animation
@@ -685,17 +649,10 @@ export default class GameScene extends Phaser.Scene {
     }
 
     scaleBackgrounds() {
-        const BASE_WIDTH = 800;
-        const BASE_HEIGHT = 600;
-        const scaleRatioX = this.scale.width / BASE_WIDTH
-        const scaleRatioY = this.scale.height / BASE_HEIGHT
-
-        //const hratio = 4*this.scale.height/1296;
-
-        this.sky.setScale(1.85*scaleRatioX, 1.85*scaleRatioY);
-        this.clouds.setScale(1.85*scaleRatioX, 1.85*scaleRatioY);
-        this.foreground.setScale(1.85*scaleRatioX, 1.85*scaleRatioY);
-        this.distantLand.setScale(1.85*scaleRatioX, 1.85*scaleRatioY);
+        this.sky.setScale(1.85*this.scaleRatioX, 1.85*this.scaleRatioY);
+        this.clouds.setScale(1.85*this.scaleRatioX, 1.85*this.scaleRatioY);
+        this.foreground.setScale(1.85*this.scaleRatioX, 1.85*this.scaleRatioY);
+        this.distantLand.setScale(1.85*this.scaleRatioX, 1.85*this.scaleRatioY);
         
     }
 
