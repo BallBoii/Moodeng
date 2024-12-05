@@ -25,7 +25,7 @@ export default class GameScene extends Phaser.Scene {
         const BASE_HEIGHT = 600;
         this.scaleRatioX = this.scale.width / BASE_WIDTH
         this.scaleRatioY = this.scale.height / BASE_HEIGHT
-        
+
         this.levelUpThresholds = [0,50,150,300,500,750,1000,1500];
         this.currentLevelIndex = 0;
         this.levelUpSound = this.sound.add('levelUp', { volume: 0.5 });
@@ -94,14 +94,6 @@ export default class GameScene extends Phaser.Scene {
             callbackScope: this,
             loop: true
         });
-
-        let timexd = this.time.addEvent({
-            delay: 1000, // Check every second
-            callback: this.updateSpawnInterval,
-            callbackScope: this,
-            loop: true
-        });
-
 
         // Obstacle jump
         this.obstacle_jump = this.physics.add.sprite(400, 100, 'obstacle_jump');
@@ -200,10 +192,10 @@ export default class GameScene extends Phaser.Scene {
         }
     }
 
-    updateSpawnInterval2() {
+    updateSpawnInterval() {
         const maxInterval = 3000; // Default maximum spawn interval
-        const minInterval = 800;  // Minimum spawn interval
-        const scalingFactor = 50; // Higher value slows the decrease rate
+        const minInterval = 1000;  // Minimum spawn interval
+        const scalingFactor = 0.5; // Higher value slows the decrease rate
     
         this.spawntime = Math.max(
             maxInterval - this.score * scalingFactor,
@@ -316,25 +308,7 @@ export default class GameScene extends Phaser.Scene {
     spawnObstacle() {
             if (!this.gameActive) return;
 
-            const maxInterval = 3000; // Default maximum spawn interval
-            const minInterval = 1000;  // Minimum spawn interval
-            const scalingFactor = 0.5; // Higher value slows the decrease rate
-        
-            this.spawntime = Math.max(
-                maxInterval - this.score * scalingFactor,
-                minInterval
-            );
-            console.log(this.spawntime);
-        
-            // Update the timer if the spawn interval has changed
-            if (this.obstacleTimer.delay !== this.spawntime) {
-                this.obstacleTimer.reset({
-                    delay: this.spawntime,
-                    callback: this.spawnObstacle,
-                    callbackScope: this,
-                    loop: true
-                });
-            }
+            this.updateSpawnInterval();
         
             // Define obstacle types and their respective spawn methods
             const obstacleTypes = [
