@@ -10,11 +10,11 @@ export default class MainMenuScene extends Phaser.Scene {
     preload() {
         // Load background and button images
         this.loadBackground();
-        this.load.image('startButton', 'assets/Icon_Play.png'); // Start button image
+        this.load.image('startButton', 'assets/Icon/Icon_Play.png'); // Start button image
         this.load.audio('buttonClick2', 'assets/sounds/Coffee2.mp3');
-        this.load.image('loginButton', 'assets/Icon_Mail.png');
-        this.load.image("leaderboardButton", "assets/Icon_Award.png");
-        this.load.image("IconMoodeng", "assets/Icon_Moodeng.png");
+        this.load.image('loginButton', 'assets/Icon/Icon_Mail.png');
+        this.load.image("leaderboardButton", "assets/Icon/Icon_Award.png");
+        this.load.image("IconMoodeng", "assets/Icon/Icon_Moodeng.png");
 
         this.load.audio('backgroundMusic', 'assets/Music/Blackjack.mp3');
     }

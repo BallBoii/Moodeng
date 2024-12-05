@@ -7,27 +7,17 @@ export default class GameScene extends Phaser.Scene {
 
     preload() {
         this.loadEffect();
-        this.loadOwlet();
         this.loadImage();
-        this.loadBlueBird();
-        this.loadRino();
         this.loadFruits();
-        this.loadChicken();
-        this.loadFatbird();
+        this.loadMonsters();
         this.load.image('hoppybara', 'assets/Moodeng.png');
         this.load.image('obstacle_jump', 'assets/obtra.png');
-        this.load.image('ghost', 'assets/Icon_Ghost.png');
         this.load.image('ground', 'assets/ground.png');
-        this.load.image('restartIcon', 'assets/Icon_Return.png');
-        this.load.image('backButton', 'assets/Icon_Home.png');
-        this.load.image('heart', 'assets/Icon_Heart.png');
+        this.load.image('restartIcon', 'assets/Icon/Icon_Return.png');
+        this.load.image('backButton', 'assets/Icon/Icon_Home.png');
+        this.load.image('heart', 'assets/Icon/Icon_Heart.png');
 
-        this.load.audio('buttonClick1', 'assets/sounds/Coffee1.mp3');
-        this.load.audio('hitsound', 'assets/sounds/Hit_damage.wav')
-        this.load.audio('bubble', 'assets/sounds/Bubble.wav')
-        this.load.audio('bump', 'assets/sounds/Bump.wav')
-        this.load.audio('hurt', 'assets/sounds/Hurt.wav')
-        this.load.audio('levelUp', 'assets/sounds/Powerup.wav');
+        this.loadaudio();
     }
 
     create() {
@@ -780,6 +770,24 @@ export default class GameScene extends Phaser.Scene {
             frameWidth: 32,   // Width of each frame
             frameHeight: 32   // Height of each frame
         });
+    }
+
+    loadaudio() {
+        this.load.audio('buttonClick1', 'assets/sounds/Coffee1.mp3');
+        this.load.audio('hitsound', 'assets/sounds/Hit_damage.wav')
+        this.load.audio('bubble', 'assets/sounds/Bubble.wav')
+        this.load.audio('bump', 'assets/sounds/Bump.wav')
+        this.load.audio('hurt', 'assets/sounds/Hurt.wav')
+        this.load.audio('levelUp', 'assets/sounds/Powerup.wav');
+    }
+
+    loadMonsters() {
+        this.loadBlueBird();
+        this.loadChicken();
+        this.loadFatbird();
+        this.loadOwlet();
+        this.loadRino();
+        this.load.image('ghost', 'assets/Icon/Icon_Ghost.png');
     }
 
     loadFruits() {
